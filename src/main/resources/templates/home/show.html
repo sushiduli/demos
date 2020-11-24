@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <link th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.css}" rel="stylesheet"/>
+    <script th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.js}"></script>
+
+    <script th:src="@{/webjars/jquery/1.11.1/jquery.js}"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-inverse">
+    ...
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col-md-1" onclick="refresh()">
+            <button type="button" class="btn btn-success">测试</button>
+        </div>
+        <div class="col-md-11">
+                <textarea id="sh" th:text="${name}">
+
+                </textarea>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+<script type="text/javascript">
+    function refresh(){
+        //需要发送的数据
+        var modeljson={
+            "id": "1"
+        }
+
+        $.ajax({
+            url: "/ajax",
+            type: 'post',
+            //contentType: 'application/json', //没规定就是默认的application/x-www-form-urlencoded; charset=UTF-8
+            data: modeljson,  //要发的数据，如果出现格式问题则 JSON.stringify(modeljson)
+            async: true,
+            success: function(data){
+                if(data != null){
+                    $("#sh").val(data);
+                }
+            }
+        });
+    }
+</script>
+</html>
