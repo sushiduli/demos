@@ -1,5 +1,6 @@
 package com.elib.ai.show.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,5 +43,16 @@ public class BaseController {
     public String ajax(HttpServletRequest request){
         i++;
         return String.valueOf(i);
+    }
+
+    @PostMapping("/beau")
+    @ResponseBody
+    public Object beau(HttpServletRequest request){
+        JSONObject jsonObject = new JSONObject();
+        JSONObject b = new JSONObject();
+        b.put("k", 456465);
+        jsonObject.put("a", "12313");
+        jsonObject.put("b", b);
+        return jsonObject;
     }
 }

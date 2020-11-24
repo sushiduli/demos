@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
+    <script th:src="@{/webjars/jquery/1.11.1/jquery.js}"></script>
     <link th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.css}" rel="stylesheet"/>
     <script th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.js}"></script>
 
-    <script th:src="@{/webjars/jquery/1.11.1/jquery.js}"></script>
 </head>
 
 <body>
@@ -24,6 +24,16 @@
                 <textarea id="sh" th:text="${name}">
 
                 </textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1" onclick="beau()">
+            <button type="button" class="btn btn-success">测试2</button>
+        </div>
+        <div class="col-md-11">
+                <div id="b">
+
+                </div>
         </div>
     </div>
 </div>
@@ -49,5 +59,30 @@
             }
         });
     }
+
+
+    function beau(){
+        //需要发送的数据
+        var modeljson={
+            "id": "1"
+        }
+
+        $.ajax({
+            url: "/beau",
+            type: 'post',
+            data: modeljson,  //要发的数据，如果出现格式问题则 JSON.stringify(modeljson)
+            async: true,
+            success: function(data){
+                d = JSON.stringify(data)
+                var jdata = JSON.stringify(JSON.parse(d), null, 4);
+                console.log(jdata);//这是在输出框的json数据确实被格式话了
+                $("#b").html("<pre>"+jdata+"</pre>" );
+
+            }
+        });
+    }
+
+
+
 </script>
 </html>
