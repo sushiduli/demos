@@ -3,5 +3,5 @@
 
 ###  quick start
    ```
-   git clone  
+   git clone  https://github.com/sushiduli/demos.git
    ```
