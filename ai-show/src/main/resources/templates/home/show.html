@@ -8,6 +8,8 @@
     <script th:src="@{/webjars/jquery/1.11.1/jquery.js}"></script>
     <link th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.css}" rel="stylesheet"/>
     <script th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap-fileinput/4.3.5/js/fileinput.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap-fileinput/4.3.5/css/fileinput.css}"/>
 
 </head>
 
@@ -27,16 +29,24 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-1" onclick="beau()">
-            <button type="button" class="btn btn-success">测试2</button>
+        <div class="col-xs-8">
+            <label>upload  </label>
         </div>
-        <div class="col-md-11">
-                <div id="b">
-
+    </div>
+    <div class="row">
+        <div class="col-xs-8">
+            <!-- 此处加入文件上传testObject数据 -->
+            <div class="form-group" style="border-top:1px solid #000">
+                <!--                         <label class="col-xs-1 control-label">  upload:   </label> -->
+                <div class="col-xs-1"></div>
+                <div class="col-xs-10">
+                    <input id="configUpload" name="file" type="file" data-show-caption="true">
                 </div>
+            </div>
         </div>
     </div>
 </div>
+<div class="con"></div>
 </div>
 </body>
 <script type="text/javascript">
@@ -84,5 +94,39 @@
 
 
 
+$(function(){
+    //批量上传更新数据
+    $("#configUpload").fileinput({
+        showPreview: true,
+        uploadUrl: "/upload",
+        // allowedFileExtensions: ["xlsx"],
+        layoutTemplates:{ progress: '<div class="progress">\n' +
+            '    <div class="{class}" role="progressbar" aria-valuenow="{percent}" aria-valuemin="0" aria-valuemax="100" style="width:0%;">\n' +
+            '        0%\n' +
+            '     </div>\n' +
+            '</div>'
+        },
+        elErrorContainer: "#errorBlock",
+    }).on('filebatchpreupload', function(event, data) {
+        //loading("${timeStamp}");
+    });
+
+    $("#configUpload").on("fileuploaded",function(event, data, previewId, index){
+        console.log(data)
+        d = JSON.stringify(data)
+        var jdata = JSON.stringify(JSON.parse(d), null, 4);
+        console.log(jdata);//这是在输出框的json数据确实被格式话了
+        $("#b").html("<pre>"+jdata+"</pre>" );
+    });
+
+    $('#configUpload').on('fileuploaderror', function(event, data, msg) {
+        var form = data.form, files = data.files, extra = data.extra,
+            response = data.response, reader = data.reader;
+        console.log('File upload error');
+       // get message
+       alert(msg);
+    });
+
+});
 </script>
 </html>
